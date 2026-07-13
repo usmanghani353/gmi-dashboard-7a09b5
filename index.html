@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<title>Applications — Usman &amp; Mahnoor</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AF%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<title>Applications — Usman &amp; Mahnoor</title>
+<style>
+  :root{
+    --page:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+    --line:#e1e0d9; --hair:rgba(11,11,11,.10);
+    --accent:#2a78d6; --accent-ink:#1c5cab; --accent-bg:rgba(42,120,214,.10);
+    --good-ink:#006300; --good-bg:rgba(12,163,12,.10);
+    --warn-ink:#7a5600; --warn-bg:rgba(250,178,25,.16);
+    --crit-ink:#b02f2f; --crit-bg:rgba(208,59,59,.10);
+    --u-ink:#0c7a55; --u-bg:rgba(27,175,122,.13);
+    --m-ink:#4a3aa7; --m-bg:rgba(74,58,167,.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --page:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+      --line:#2c2c2a; --hair:rgba(255,255,255,.10);
+      --accent:#3987e5; --accent-ink:#86b6ef; --accent-bg:rgba(57,135,229,.16);
+      --good-ink:#0ca30c; --good-bg:rgba(12,163,12,.14);
+      --warn-ink:#fab219; --warn-bg:rgba(250,178,25,.12);
+      --crit-ink:#e66767; --crit-bg:rgba(230,103,103,.12);
+      --u-ink:#2fcf9a; --u-bg:rgba(25,158,112,.16);
+      --m-ink:#a89bf0; --m-bg:rgba(144,133,233,.14);
+    }
+  }
+  :root[data-theme="dark"]{
+    --page:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+    --line:#2c2c2a; --hair:rgba(255,255,255,.10);
+    --accent:#3987e5; --accent-ink:#86b6ef; --accent-bg:rgba(57,135,229,.16);
+    --good-ink:#0ca30c; --good-bg:rgba(12,163,12,.14);
+    --warn-ink:#fab219; --warn-bg:rgba(250,178,25,.12);
+    --crit-ink:#e66767; --crit-bg:rgba(230,103,103,.12);
+    --u-ink:#2fcf9a; --u-bg:rgba(25,158,112,.16);
+    --m-ink:#a89bf0; --m-bg:rgba(144,133,233,.14);
+  }
+  :root[data-theme="light"]{
+    --page:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+    --line:#e1e0d9; --hair:rgba(11,11,11,.10);
+    --accent:#2a78d6; --accent-ink:#1c5cab; --accent-bg:rgba(42,120,214,.10);
+    --good-ink:#006300; --good-bg:rgba(12,163,12,.10);
+    --warn-ink:#7a5600; --warn-bg:rgba(250,178,25,.16);
+    --crit-ink:#b02f2f; --crit-bg:rgba(208,59,59,.10);
+    --u-ink:#0c7a55; --u-bg:rgba(27,175,122,.13);
+    --m-ink:#4a3aa7; --m-bg:rgba(74,58,167,.10);
+  }
+  html,body{margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);
+    font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-text-size-adjust:100%}
+  *,*::before,*::after{box-sizing:border-box}
+  [hidden]{display:none!important}
+  .app{max-width:960px;margin:0 auto;padding:22px 18px 70px}
+  button{font:inherit;color:inherit;cursor:pointer}
+  a{color:var(--accent-ink)}
+  :is(button,a):focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:6px}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+  .top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .top h1{font-size:19px;line-height:1.2;margin:0;letter-spacing:-.01em;text-wrap:balance}
+  .top .sub{font-size:12.5px;color:var(--ink2);margin-top:3px}
+  .updated{font-size:11.5px;color:var(--muted);text-align:right;padding-top:4px;font-variant-numeric:tabular-nums}
+
+  .tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    padding:4px;width:max-content;max-width:100%;margin-bottom:16px}
+  .tabs button{border:0;background:transparent;border-radius:7px;padding:7px 14px;font-size:13px;color:var(--ink2)}
+  .tabs button[aria-selected="true"]{background:var(--accent);color:#fff;font-weight:600}
+
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px}
+  .tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+  .tile .v{font-size:25px;font-weight:650;line-height:1.1}
+  .tile .l{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-top:2px}
+  .tile .s{font-size:12px;color:var(--ink2);margin-top:4px;font-variant-numeric:tabular-nums}
+  .tile.hot .v{color:var(--crit-ink)}
+
+  .fr{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+  .seg{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:3px}
+  .seg button{border:0;background:transparent;border-radius:6px;padding:5px 12px;font-size:12.5px;color:var(--ink2)}
+  .seg button[aria-pressed="true"]{background:var(--page);color:var(--ink);font-weight:600;box-shadow:inset 0 0 0 1px var(--line)}
+  .btn{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600}
+  .btn:hover{border-color:var(--muted)}
+
+  .grp{margin-bottom:20px}
+  .grp>h2, details.grp summary{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+    font-weight:600;margin:0 0 8px 2px}
+  details.grp summary{cursor:pointer;list-style-position:inside}
+  .grp .n{color:var(--ink2)}
+  .cards{display:flex;flex-direction:column;gap:8px}
+  .card{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--muted);
+    border-radius:10px;padding:11px 14px}
+  .card.sc-passed{border-left-color:var(--crit-ink)}
+  .card.sc-active{border-left-color:var(--accent)}
+  .card.sc-done{border-left-color:var(--good-ink);opacity:.82}
+  .card .t{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+  .card .t b{font-size:14.5px;font-weight:600;line-height:1.35}
+  .card .meta{font-size:12.5px;color:var(--muted);margin-top:1px}
+  .card .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .card .next{font-size:13px;color:var(--ink2);margin-top:7px}
+  .card .next b{font-weight:600;color:var(--ink)}
+  .card .next a{margin-left:6px;white-space:nowrap}
+  .card .notes{font-size:12.5px;color:var(--muted);margin-top:5px}
+  .chip{flex:none;font-size:11.5px;font-weight:600;border-radius:99px;padding:2px 9px;white-space:nowrap}
+  .p-usman{background:var(--u-bg);color:var(--u-ink)}
+  .p-mahnoor{background:var(--m-bg);color:var(--m-ink)}
+  .p-both{background:var(--accent-bg);color:var(--accent-ink)}
+  .p-claude{box-shadow:inset 0 0 0 1px var(--line);color:var(--ink2)}
+  .pill{font-size:12px;font-weight:600;border-radius:99px;padding:2.5px 10px;white-space:nowrap}
+  .st-todo{color:var(--ink2);box-shadow:inset 0 0 0 1px var(--line)}
+  .st-active{background:var(--accent-bg);color:var(--accent-ink)}
+  .st-done{background:var(--good-bg);color:var(--good-ink)}
+  .st-passed{background:var(--crit-bg);color:var(--crit-ink)}
+  .dl{font-size:12px;color:var(--ink2);border-radius:99px;padding:2.5px 10px;box-shadow:inset 0 0 0 1px var(--line);
+    white-space:nowrap;font-variant-numeric:tabular-nums}
+  .dl.warn{background:var(--warn-bg);color:var(--warn-ink);box-shadow:none;font-weight:600}
+  .dl.crit{background:var(--crit-bg);color:var(--crit-ink);box-shadow:none;font-weight:600}
+  .bar{flex:1 1 90px;max-width:160px;height:6px;border-radius:4px;background:var(--line);overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:4px;background:var(--accent)}
+  .pct{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .empty{background:var(--surface);border:1px dashed var(--line);border-radius:12px;
+    padding:26px 20px;text-align:center;color:var(--ink2);font-size:13.5px}
+  .empty b{color:var(--ink)}
+
+  .rep{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .rep header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;
+    border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:6px}
+  .rep h2{font-size:16px;margin:0}
+  .rep header .d{font-size:12.5px;color:var(--ink2);margin-top:2px}
+  .rep h3{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:16px 0 6px}
+  .rep ul{margin:0;padding-left:18px}
+  .rep li{margin:4px 0;font-size:13.5px}
+  .rep .none{color:var(--muted);font-size:13px;margin:2px 0}
+  .rep .snap{font-size:13px;color:var(--ink2);border-top:1px solid var(--line);margin-top:16px;padding-top:10px;
+    font-variant-numeric:tabular-nums}
+  .rep .hint{font-size:12px;color:var(--muted);margin-top:8px}
+
+  .foot{font-size:11.5px;color:var(--muted);margin-top:22px;text-align:center}
+</style>
+
+<div class="app">
+  <header class="top">
+    <div>
+      <h1>Applications — Usman &amp; Mahnoor</h1>
+      <div class="sub">Deadlines, progress and the daily plan · PhD, jobs, pupillage &amp; more</div>
+    </div>
+    <div class="updated" id="updated"></div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button role="tab" aria-selected="true" data-tab="tasks">Tasks</button>
+    <button role="tab" aria-selected="false" data-tab="report">Daily report</button>
+  </nav>
+
+  <section id="view-tasks">
+    <div class="tiles" id="tiles"></div>
+    <div class="fr">
+      <div class="seg" id="pfilter" role="group" aria-label="Filter by person">
+        <button aria-pressed="true" data-p="all">Everyone</button>
+        <button aria-pressed="false" data-p="usman">Usman</button>
+        <button aria-pressed="false" data-p="mahnoor">Mahnoor</button>
+      </div>
+    </div>
+    <div id="groups"></div>
+  </section>
+
+  <section id="view-report" hidden>
+    <article class="rep">
+      <header>
+        <div>
+          <h2>Daily report</h2>
+          <div class="d" id="rep-date"></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="rep-copy">Copy report</button>
+          <button class="btn" id="rep-dl">Download .md</button>
+        </div>
+      </header>
+      <div id="rep-body"></div>
+      <p class="hint">Rebuilt live from the current data every time this tab opens — the 10:00 reminder emails carry the same content.</p>
+    </article>
+  </section>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script id="seed" type="application/json">{"version":3,"generated":"2026-07-13","artifactUrl":"https://claude.ai/code/artifact/7a09b5ce-c373-4172-9834-4777c23e4d13","contacts":{"usman":"usmanghani353@gmail.com","mahnoor":"my.mahoorkhan@gmail.com"},"entries":[{"id":"galway-hr-school","person":"both","title":"Online School on Human Rights 2026","org":"Irish Centre for Human Rights, University of Galway","category":"Summer school","deadline":"2026-07-19","status":"not_started","progress":0,"nextAction":"Submit the Google Form (forms.gle/LRXUkwxGetpp2NP49) with CV (max 2pp) + motivation letter (max 1pp)","nextActionDate":"2026-07-15","notes":"Free, fully online, runs 25 Aug-6 Oct 2026 (30 academic hours). Covers digital rights, gender/LGBTQI+, migration, advocacy. Partners: Ghent, Groningen, Uppsala. Contact iana.ovsiannikova@ugent.be. SOONEST DEADLINE.","link":"https://universityofgalway.ie/irish-centre-human-rights/summerschools/onlineschoolonhumanrights/","updatedAt":"2026-07-13T09:15:00Z"},{"id":"falcon-minipupillage","person":"mahnoor","title":"Mini-pupillage - Autumn 2026 programme","org":"Falcon Chambers (property law), London","category":"Mini-pupillage","deadline":"2026-07-31","status":"not_started","progress":0,"nextAction":"Complete the online application form for the Autumn programme (placement 15-17 Sep)","nextActionDate":"2026-07-24","notes":"Application window 1-31 July 2026. Property/commercial/agricultural law. Preference for candidates who've completed 1st year of university; law + non-law both welcome. Help: minipupillage@falcon-chambers.com.","link":"https://www.falcon-chambers.com/join-us/mini-pupillage","updatedAt":"2026-07-13T09:15:00Z"},{"id":"gu-peace-dev-phd","person":"usman","title":"PhD - Peace & Development Research (host-state responses to transnational repression)","org":"University of Gothenburg, School of Global Studies","category":"PhD","deadline":"2026-08-14","status":"not_started","progress":0,"nextAction":"Draft research proposal (max 2,000 words) on the Nordic-Baltic transnational-repression angle; line up 2 referees","nextActionDate":"2026-08-01","notes":"Strong fit with the NO-Russia digital-surveillance/securitisation angle: how Nordic-Baltic host states respond to authoritarian repression of diaspora activists. Needs proposal + MA thesis + CV + 2 reference contacts (no recommendation letters). Gothenburg, Sweden.","link":"https://web103.reachmee.com/ext/I005/1035/job?site=7&lang=UK&validator=9b89bead79bb7258ad55c8d75228e5b7&job_id=40405","updatedAt":"2026-07-13T09:15:00Z"},{"id":"mau-imer-phd","person":"usman","title":"PhD - IMER, diversity & inclusion (survey studies)","org":"Malmö University, Global Political Studies","category":"PhD","deadline":"2026-08-31","status":"not_started","progress":0,"nextAction":"Assess methods fit, then draft research plan (max 3,000 words) + personal letter (max 500 words)","nextActionDate":"2026-08-10","notes":"Migration Society 2.0 programme; survey/quantitative methods PREFERRED - check fit before investing. Needs CV, diplomas, research plan, work sample. Malmö, Sweden.","link":"https://web103.reachmee.com/ext/I005/1015/job?site=7&lang=UK&validator=e5819a4704cd849685049472c0c17895&job_id=4732","updatedAt":"2026-07-13T09:15:00Z"},{"id":"helsinki-doctoral-30","person":"both","title":"Doctoral Researchers - 30 positions, various disciplines (RESDOC/MSCA)","org":"University of Helsinki","category":"PhD","deadline":"2026-08-31","status":"not_started","progress":0,"nextAction":"Confirm which of the 30 positions fits your discipline; check MSCA mobility rule before applying","nextActionDate":"2026-08-10","notes":"4-year salaried, start Jan-Mar 2027. MSCA mobility rule: max 12 months in Finland during the preceding 36. VERIFY a law / AI-governance / human-rights slot exists - the RESDOC themes seen were science-heavy (health, biodiversity, food/water, socio-ecological). Helsinki, Finland.","link":"https://jobs.helsinki.fi/job/Helsinki-Doctoral-Researchers-%2830-positions%29-in-various-disciplines-at-the-University-of-Helsinki%2C-Finland/1362391557/","updatedAt":"2026-07-13T09:15:00Z"},{"id":"uit-border-phd","person":"usman","title":"PhD Fellow in Border Studies","org":"UiT Arctic University - Centre for Geopolitics, Peace & Security (Kirkenes/Tromsø)","category":"PhD","deadline":"2026-09-15","status":"not_started","progress":0,"nextAction":"Finalise the 5-page project description (NO-Russia digital-surveillance/securitisation angle - already largely built)","nextActionDate":"2026-08-20","notes":"Formal posting (jobbnorge 302083) of the position you'd already prepared a project description for. Workplace Kirkenes + Tromsø, Norway.","link":"https://www.jobbnorge.no/en/available-jobs/job/302083/phd-fellow-in-border-studies","updatedAt":"2026-07-13T09:15:00Z"},{"id":"leuphana-coopsec-phd","person":"usman","title":"PhD - Cooperative Security (international doctoral programme)","org":"Leuphana University, Lüneburg (Germany)","category":"PhD","deadline":"2026-09-30","status":"not_started","progress":0,"nextAction":"Prepare research proposal (max 4pp) + motivation letter (max 2pp); apply at awards.leuphana.de","nextActionDate":"2026-09-10","notes":"Interdisciplinary (poli-sci/IR/economics/LAW/psychology) - law + security fits the AI-governance angle. €1,850/month scholarship + child allowance, up to 3 yrs. Starts April 2027.","link":"https://www.leuphana.de/en/research-centers/leuphana-center-for-cooperative-security/phd-and-scholarship-program-lccs.html","updatedAt":"2026-07-13T09:15:00Z"},{"id":"graysinn-tax-minipupillage","person":"mahnoor","title":"Mini-pupillage (funded & unfunded)","org":"Gray's Inn Tax Chambers, London","category":"Mini-pupillage","deadline":null,"status":"not_started","progress":0,"nextAction":"Email CV + cover letter to minipupillage@taxbar.com with available dates and clear reasons for applying","nextActionDate":"2026-07-20","notes":"Applications open year-round (no deadline). No prior tax-law knowledge required; final-year non-law undergraduates highly welcome. Both funded and unfunded placements. Apply by post or email.","link":"https://www.taxbar.com","updatedAt":"2026-07-13T09:15:00Z"}],"log":[{"id":"log-20260713-batch1","ts":"2026-07-13T09:15:00Z","who":"claude","entryId":"","text":"Added 8 opportunities from Usman's links, prioritised by deadline: 5 PhDs (Gothenburg, Malmö, Helsinki, UiT, Leuphana), 2 mini-pupillages (Falcon, Gray's Inn Tax), 1 human-rights summer school (Galway). Owners: Usman 4, Mahnoor 2, Both 2."},{"id":"log-20260712-reset","ts":"2026-07-12T20:50:00Z","who":"claude","entryId":"","text":"Dashboard reset on Usman's instruction - fresh start. Usman sends opportunity links to Claude, who adds entries prioritised by deadline."}]}</script>
+<script>
+(function(){
+"use strict";
+var SEED = {};
+try { SEED = JSON.parse(document.getElementById("seed").textContent) || {}; } catch(e) {}
+var ENTRIES = (Array.isArray(SEED.entries) ? SEED.entries : []).filter(function(e){ return e && e.id && !e.deleted; });
+var LOG = Array.isArray(SEED.log) ? SEED.log : [];
+var PEOPLE = { usman:{name:"Usman"}, mahnoor:{name:"Mahnoor"}, both:{name:"Both"}, claude:{name:"Claude"} };
+var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var $ = function(id){ return document.getElementById(id); };
+var pFilter = "all";
+
+function pad(n){ return (n<10?"0":"")+n; }
+function todayYMD(){ var d=new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function ymdOffset(days){ var d=new Date(); d.setDate(d.getDate()+days); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function ymdToDate(s){ var p=s.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+function daysUntil(ymd){ return Math.round((ymdToDate(ymd) - ymdToDate(todayYMD()))/86400000); }
+function fmtYMD(ymd){
+  if(!ymd) return "";
+  var d = ymdToDate(ymd), s = DAYS[d.getDay()].slice(0,3)+" "+d.getDate()+" "+MONTHS[d.getMonth()];
+  if (d.getFullYear() !== new Date().getFullYear()) s += " "+d.getFullYear();
+  return s;
+}
+function localYMDOfIso(iso){ var d=new Date(iso); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(m){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]; }); }
+function personChip(p){ var n=(PEOPLE[p]||{name:p}).name; return '<span class="chip p-'+esc(p)+'">'+esc(n)+"</span>"; }
+function matches(e){ return pFilter==="all" || e.person===pFilter || e.person==="both"; }
+function isFor(e,p){ return e.person===p || e.person==="both"; }
+function effState(e){
+  if (e.status === "completed") return "done";
+  if (e.deadline && daysUntil(e.deadline) < 0) return "passed";
+  return e.status === "in_progress" ? "active" : "todo";
+}
+
+/* ---------- tiles ---------- */
+function renderTiles(){
+  var es = ENTRIES.filter(matches);
+  function split(list){
+    if (pFilter!=="all") return "";
+    var u=0,m=0,b=0;
+    list.forEach(function(e){ if(e.person==="usman")u++; else if(e.person==="mahnoor")m++; else b++; });
+    return '<div class="s">U '+u+" · M "+m+(b?" · Both "+b:"")+"</div>";
+  }
+  var week=[], passed=[], active=[], done=[];
+  es.forEach(function(e){
+    var st=effState(e);
+    if (st==="done") done.push(e);
+    else {
+      if (st==="passed") passed.push(e);
+      if (st==="active") active.push(e);
+      if (e.deadline){ var d=daysUntil(e.deadline); if(d>=0&&d<=7) week.push(e); }
+    }
+  });
+  $("tiles").innerHTML =
+    '<div class="tile"><div class="v">'+week.length+'</div><div class="l">Due in 7 days</div>'+split(week)+"</div>"+
+    '<div class="tile'+(passed.length?" hot":"")+'"><div class="v">'+passed.length+'</div><div class="l">Deadline passed</div>'+split(passed)+"</div>"+
+    '<div class="tile"><div class="v">'+active.length+'</div><div class="l">In progress</div>'+split(active)+"</div>"+
+    '<div class="tile"><div class="v">'+done.length+'</div><div class="l">Completed</div>'+split(done)+"</div>";
+}
+
+/* ---------- cards ---------- */
+function pillFor(e){
+  var st = effState(e);
+  if (st==="done")   return '<span class="pill st-done">✓ Completed</span>';
+  if (st==="passed") return '<span class="pill st-passed">⚠ Deadline passed</span>';
+  if (st==="active") return '<span class="pill st-active">● In progress</span>';
+  return '<span class="pill st-todo">○ Not started</span>';
+}
+function dlBadge(e){
+  if (!e.deadline) return "";
+  var d = daysUntil(e.deadline), txt, cls="";
+  if (e.status==="completed"){ txt = fmtYMD(e.deadline); }
+  else if (d < 0){ cls="crit"; txt = "was "+fmtYMD(e.deadline)+" · "+(-d)+(d===-1?" day":" days")+" ago"; }
+  else if (d === 0){ cls="warn"; txt = "due today"; }
+  else if (d === 1){ cls="warn"; txt = "due tomorrow"; }
+  else { if(d<=3) cls="warn"; txt = fmtYMD(e.deadline)+" · in "+d+" days"; }
+  return '<span class="dl '+cls+'">'+esc(txt)+"</span>";
+}
+function cardHtml(e){
+  var st = effState(e);
+  var bar = (st==="active")
+    ? '<span class="bar" aria-hidden="true"><i style="width:'+(+e.progress||0)+'%"></i></span><span class="pct">'+(+e.progress||0)+"%</span>" : "";
+  var link = e.link ? ' <a href="'+esc(e.link)+'" target="_blank" rel="noopener">details ↗</a>' : "";
+  var next = (e.nextAction && st!=="done")
+    ? '<div class="next">→ '+esc(e.nextAction)+(e.nextActionDate?' <b>('+esc(fmtYMD(e.nextActionDate))+")</b>":"")+link+"</div>"
+    : (link ? '<div class="next">'+link.trim()+"</div>" : "");
+  var notes = e.notes ? '<div class="notes">'+esc(e.notes)+"</div>" : "";
+  var meta = [e.org, e.category].filter(Boolean).map(esc).join(" · ");
+  return '<div class="card sc-'+st+'">'+
+    '<div class="t"><b>'+esc(e.title)+"</b>"+personChip(e.person)+"</div>"+
+    (meta?'<div class="meta">'+meta+"</div>":"")+
+    '<div class="row">'+pillFor(e)+dlBadge(e)+bar+"</div>"+next+notes+"</div>";
+}
+function renderGroups(){
+  var es = ENTRIES.filter(matches);
+  if (!es.length){
+    $("groups").innerHTML = '<div class="empty"><b>Fresh slate.</b><br>Usman sends opportunity links to Claude — entries land here, prioritised by deadline.</div>';
+    return;
+  }
+  var passed=[], week=[], later=[], nodate=[], done=[];
+  es.forEach(function(e){
+    var st = effState(e);
+    if (st==="done") return done.push(e);
+    if (st==="passed") return passed.push(e);
+    if (!e.deadline) return nodate.push(e);
+    (daysUntil(e.deadline)<=7 ? week : later).push(e);
+  });
+  var byDl = function(a,b){ return (a.deadline||"9999") < (b.deadline||"9999") ? -1 : 1; };
+  passed.sort(byDl); week.sort(byDl); later.sort(byDl);
+  nodate.sort(function(a,b){ return (a.nextActionDate||"9999") < (b.nextActionDate||"9999") ? -1 : 1; });
+  done.sort(function(a,b){ return String(a.updatedAt)<String(b.updatedAt)?1:-1; });
+  function grp(title, list){
+    if (!list.length) return "";
+    return '<div class="grp"><h2>'+title+' <span class="n">· '+list.length+"</span></h2>"+
+      '<div class="cards">'+list.map(cardHtml).join("")+"</div></div>";
+  }
+  var html = grp("Deadline passed — decide or reschedule", passed)+
+             grp("Due in the next 7 days", week)+
+             grp("Coming up", later)+
+             grp("No deadline set", nodate);
+  if (done.length){
+    html += '<details class="grp"><summary>Completed <span class="n">· '+done.length+"</span></summary>"+
+      '<div class="cards" style="margin-top:8px">'+done.map(cardHtml).join("")+"</div></details>";
+  }
+  $("groups").innerHTML = html;
+}
+
+/* ---------- daily report ---------- */
+var lastReportMd = "";
+function reportData(){
+  var t = todayYMD(), y = ymdOffset(-1);
+  var open = ENTRIES.filter(function(e){ return effState(e)!=="done"; });
+  function line(e, extra){ return { person:e.person, text:e.title+(extra?" — "+extra:"") }; }
+  var passed = open.filter(function(e){ return effState(e)==="passed"; })
+    .map(function(e){ return line(e, (-daysUntil(e.deadline))+(daysUntil(e.deadline)===-1?" day":" days")+" past deadline ("+fmtYMD(e.deadline)+")"); });
+  var dueToday = open.filter(function(e){ return e.deadline && daysUntil(e.deadline)===0; })
+    .map(function(e){ return line(e, e.nextAction||""); });
+  var actions = open.filter(function(e){ return e.nextActionDate && e.nextActionDate<=t && !(e.deadline && daysUntil(e.deadline)<=0); })
+    .map(function(e){ return line(e, e.nextAction||"next action due"); });
+  var week = open.filter(function(e){ return e.deadline && daysUntil(e.deadline)>0 && daysUntil(e.deadline)<=7; })
+    .sort(function(a,b){ return a.deadline<b.deadline?-1:1; })
+    .map(function(e){ return line(e, fmtYMD(e.deadline)+" · in "+daysUntil(e.deadline)+" day"+(daysUntil(e.deadline)===1?"":"s")); });
+  var ylog = LOG.filter(function(l){ return localYMDOfIso(l.ts)===y; });
+  var tlog = LOG.filter(function(l){ return localYMDOfIso(l.ts)===t; });
+  function snap(p){
+    var mine = ENTRIES.filter(function(e){ return isFor(e,p); });
+    var a=0,d=0,w=0;
+    mine.forEach(function(e){ var st=effState(e);
+      if(st==="done")d++; else { if(st==="active")a++; if(e.deadline&&daysUntil(e.deadline)>=0&&daysUntil(e.deadline)<=7)w++; } });
+    return PEOPLE[p].name+": "+a+" in progress · "+w+" due this week · "+d+" completed";
+  }
+  return { today:t, passed:passed, dueToday:dueToday, actions:actions, week:week,
+           ylog:ylog, tlog:tlog, snap:[snap("usman"), snap("mahnoor")] };
+}
+function renderReport(){
+  var r = reportData();
+  var d = ymdToDate(r.today);
+  $("rep-date").textContent = DAYS[d.getDay()]+" "+d.getDate()+" "+MONTHS[d.getMonth()]+" "+d.getFullYear();
+  function ul(items, none){
+    if (!items.length) return '<p class="none">'+none+"</p>";
+    return "<ul>"+items.map(function(i){ return "<li>"+personChip(i.person)+" <span>"+esc(i.text)+"</span></li>"; }).join("")+"</ul>";
+  }
+  function logUl(items, none){
+    if (!items.length) return '<p class="none">'+none+"</p>";
+    return "<ul>"+items.map(function(l){ return "<li>"+personChip(l.who)+" <span>"+esc(l.text)+"</span></li>"; }).join("")+"</ul>";
+  }
+  $("rep-body").innerHTML =
+    "<h3>Yesterday — what moved</h3>"+logUl(r.ylog,"No activity was logged yesterday.")+
+    "<h3>Today so far</h3>"+logUl(r.tlog,"Nothing logged yet today.")+
+    "<h3>Deadline passed — needs a decision</h3>"+ul(r.passed,"Nothing overdue. Keep it that way.")+
+    "<h3>Due today</h3>"+ul(r.dueToday,"No deadlines land today.")+
+    "<h3>Next actions due</h3>"+ul(r.actions,"No next actions scheduled for today.")+
+    "<h3>Due in the next 7 days</h3>"+ul(r.week,"A quiet week ahead so far.")+
+    '<div class="snap">'+r.snap.map(esc).join(" &nbsp;·&nbsp; ")+"</div>";
+  lastReportMd = reportMd(r);
+}
+function reportMd(r){
+  var d = ymdToDate(r.today);
+  function sec(h, items, none){
+    var out = "\n## "+h+"\n";
+    if (!items.length) return out+"- "+none+"\n";
+    return out+items.map(function(i){ return "- ["+(PEOPLE[i.person||i.who]||{name:i.person||i.who}).name+"] "+(i.text); }).join("\n")+"\n";
+  }
+  return "# Daily report — "+DAYS[d.getDay()]+" "+d.getDate()+" "+MONTHS[d.getMonth()]+" "+d.getFullYear()+"\n"+
+    sec("Yesterday — what moved", r.ylog, "No activity logged.")+
+    sec("Deadline passed — needs a decision", r.passed, "Nothing overdue.")+
+    sec("Due today", r.dueToday, "No deadlines today.")+
+    sec("Next actions due", r.actions, "None scheduled.")+
+    sec("Due in the next 7 days", r.week, "Nothing due this week yet.")+
+    "\n## Snapshot\n- "+r.snap.join("\n- ")+"\n";
+}
+function copyText(txt, okMsg){
+  function done(){ var b=$("rep-copy"); var t=b.textContent; b.textContent=okMsg; setTimeout(function(){ b.textContent=t; },1600); }
+  function fallback(){
+    var ta = document.createElement("textarea");
+    ta.value = txt; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); done(); } catch(e){}
+    document.body.removeChild(ta);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText)
+    navigator.clipboard.writeText(txt).then(done, fallback);
+  else fallback();
+}
+
+/* ---------- events ---------- */
+document.querySelectorAll(".tabs [data-tab]").forEach(function(b){
+  b.addEventListener("click", function(){
+    document.querySelectorAll(".tabs [data-tab]").forEach(function(x){ x.setAttribute("aria-selected", x===b ? "true":"false"); });
+    $("view-tasks").hidden = b.dataset.tab!=="tasks";
+    $("view-report").hidden = b.dataset.tab!=="report";
+    if (b.dataset.tab==="report") renderReport();
+  });
+});
+$("pfilter").addEventListener("click", function(ev){
+  var b = ev.target.closest("[data-p]"); if(!b) return;
+  pFilter = b.dataset.p;
+  document.querySelectorAll("#pfilter [data-p]").forEach(function(x){ x.setAttribute("aria-pressed", x===b ? "true":"false"); });
+  renderTiles(); renderGroups();
+});
+$("rep-copy").addEventListener("click", function(){ renderReport(); copyText(lastReportMd, "Copied ✓"); });
+$("rep-dl").addEventListener("click", function(){
+  renderReport();
+  try {
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([lastReportMd], {type:"text/markdown"}));
+    a.download = "gmi-report-"+todayYMD()+".md";
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 400);
+  } catch(e){ copyText(lastReportMd, "Copied ✓"); }
+});
+
+/* ---------- init ---------- */
+$("updated").textContent = "Updated "+(SEED.generated||"—")+" · view-only, maintained by Claude";
+$("foot").textContent = "Usman sends new opportunities and progress to Claude; the board and the 10:00 reminder emails update from there.";
+renderTiles(); renderGroups();
+})();
+</script>
+
+</body>
+</html>
