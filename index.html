@@ -80,8 +80,16 @@
   .tile .v{font-size:25px;font-weight:650;line-height:1.1}
   .tile .l{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-top:2px}
   .tile .s{font-size:12px;color:var(--ink2);margin-top:4px;font-variant-numeric:tabular-nums}
-  .tile.hot .v{color:var(--crit-ink)}
-  .tile.good .v{color:var(--good-ink)}
+  .tile.tl-blue{border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+  .tile.tl-blue .v{color:var(--accent-ink)}
+  .tile.tl-warn{border-left:3px solid var(--warn-ink);background:color-mix(in srgb,var(--warn-ink) 13%,var(--surface))}
+  .tile.tl-warn .v{color:var(--warn-ink)}
+  .tile.tl-crit{border-left:3px solid var(--crit-ink);background:color-mix(in srgb,var(--crit-ink) 8%,var(--surface))}
+  .tile.tl-crit .v{color:var(--crit-ink)}
+  .tile.tl-good{border-left:3px solid var(--good-ink);background:color-mix(in srgb,var(--good-ink) 8%,var(--surface))}
+  .tile.tl-good .v{color:var(--good-ink)}
+  .tile.tl-violet{border-left:3px solid var(--m-ink);background:color-mix(in srgb,var(--m-ink) 9%,var(--surface))}
+  .tile.tl-violet .v{color:var(--m-ink)}
 
   .fr{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
   .seg{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:3px}
@@ -102,6 +110,15 @@
   .card.sc-active{border-left-color:var(--accent)}
   .card.sc-done{border-left-color:var(--good-ink);opacity:.82}
   .card.sc-log{border-left-color:var(--line)}
+  .card.pt-usman{background:color-mix(in srgb,var(--u-ink) 8%,var(--surface))}
+  .card.pt-mahnoor{background:color-mix(in srgb,var(--m-ink) 8%,var(--surface))}
+  .card.pt-both{background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+  .card.ac-applied{border-left-color:var(--accent)}
+  .card.ac-interview{border-left-color:var(--warn-ink)}
+  .card.ac-offer{border-left-color:var(--good-ink)}
+  .card.ac-rejected{border-left-color:var(--crit-ink)}
+  .card.ac-withdrawn{border-left-color:var(--muted)}
+  .card.ac-note{border-left-color:var(--line)}
   .card .t{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
   .card .t b{font-size:14.5px;font-weight:600;line-height:1.35}
   .card .t .ttl{font-size:14px;line-height:1.35}
@@ -119,6 +136,12 @@
   .p-claude{box-shadow:inset 0 0 0 1px var(--line);color:var(--ink2)}
   .kind{flex:none;font-size:11.5px;font-weight:600;border-radius:99px;padding:2px 9px;white-space:nowrap;
     color:var(--ink2);box-shadow:inset 0 0 0 1px var(--line)}
+  .cat{flex:none;font-size:11.5px;font-weight:600;border-radius:99px;padding:2px 9px;white-space:nowrap}
+  .cat-phd{background:color-mix(in srgb,var(--accent) 15%,var(--surface));color:var(--accent-ink)}
+  .cat-pupillage{background:color-mix(in srgb,var(--m-ink) 16%,var(--surface));color:var(--m-ink)}
+  .cat-summer{background:color-mix(in srgb,var(--good-ink) 15%,var(--surface));color:var(--good-ink)}
+  .cat-job{background:color-mix(in srgb,var(--warn-ink) 18%,var(--surface));color:var(--warn-ink)}
+  .cat-other{color:var(--ink2);box-shadow:inset 0 0 0 1px var(--line)}
   .pill{font-size:12px;font-weight:600;border-radius:99px;padding:2.5px 10px;white-space:nowrap}
   .st-todo{color:var(--ink2);box-shadow:inset 0 0 0 1px var(--line)}
   .st-active{background:var(--accent-bg);color:var(--accent-ink)}
@@ -233,6 +256,14 @@ function effState(e){
   if (e.deadline && daysUntil(e.deadline) < 0) return "passed";
   return e.status === "in_progress" ? "active" : "todo";
 }
+function catClass(c){
+  c = String(c||"").toLowerCase();
+  if (c.indexOf("phd")>=0 || c.indexOf("doctora")>=0) return "cat-phd";
+  if (c.indexOf("pupillage")>=0) return "cat-pupillage";
+  if (c.indexOf("summer")>=0 || c.indexOf("school")>=0) return "cat-summer";
+  if (c.indexOf("job")>=0 || c.indexOf("income")>=0 || c.indexOf("business")>=0) return "cat-job";
+  return "cat-other";
+}
 
 /* ================= TASKS TAB ================= */
 function renderTiles(){
@@ -254,10 +285,10 @@ function renderTiles(){
     }
   });
   $("tiles").innerHTML =
-    tile(week.length,"Due in 7 days",split(week))+
-    tile(passed.length,"Deadline passed",split(passed),passed.length?"hot":"")+
-    tile(active.length,"In progress",split(active))+
-    tile(done.length,"Completed",split(done));
+    tile(week.length,"Due in 7 days",split(week),"tl-warn")+
+    tile(passed.length,"Deadline passed",split(passed),"tl-crit")+
+    tile(active.length,"In progress",split(active),"tl-blue")+
+    tile(done.length,"Completed",split(done),"tl-good");
 }
 function pillFor(e){
   var st = effState(e);
@@ -285,11 +316,12 @@ function cardHtml(e){
     ? '<div class="next">→ '+esc(e.nextAction)+(e.nextActionDate?' <b>('+esc(fmtYMD(e.nextActionDate))+")</b>":"")+link+"</div>"
     : (link ? '<div class="next">'+link.trim()+"</div>" : "");
   var notes = e.notes ? '<div class="notes">'+esc(e.notes)+"</div>" : "";
-  var meta = [e.org, e.category].filter(Boolean).map(esc).join(" · ");
-  return '<div class="card sc-'+st+'">'+
+  var meta = e.org ? '<div class="meta">'+esc(e.org)+"</div>" : "";
+  var cat = e.category ? '<span class="cat '+catClass(e.category)+'">'+esc(e.category)+"</span>" : "";
+  return '<div class="card sc-'+st+" pt-"+esc(e.person)+'">'+
     '<div class="t"><b>'+esc(e.title)+"</b>"+personChip(e.person)+"</div>"+
-    (meta?'<div class="meta">'+meta+"</div>":"")+
-    '<div class="row">'+pillFor(e)+dlBadge(e)+bar+"</div>"+next+notes+"</div>";
+    meta+
+    '<div class="row">'+pillFor(e)+cat+dlBadge(e)+bar+"</div>"+next+notes+"</div>";
 }
 function renderGroups(){
   var es = ENTRIES.filter(matches);
@@ -339,10 +371,10 @@ function renderLogTiles(){
   var off  = as.filter(function(a){ return a.status==="offer"; });
   var wk   = as.filter(function(a){ var d=a.date?daysUntil(a.date):null; return d!==null && d>=-7 && d<=0; });
   $("ltiles").innerHTML =
-    tile(apps.length,"Applications",split(apps))+
-    tile(iv.length,"Interviews",split(iv))+
-    tile(off.length,"Offers",split(off),off.length?"good":"")+
-    tile(wk.length,"Logged this week",split(wk));
+    tile(apps.length,"Applications",split(apps),"tl-blue")+
+    tile(iv.length,"Interviews",split(iv),"tl-warn")+
+    tile(off.length,"Offers",split(off),"tl-good")+
+    tile(wk.length,"Logged this week",split(wk),"tl-violet");
 }
 function actTitle(a){
   if (a.role && a.org) return '<span class="ttl"><b>'+esc(a.role)+"</b> — "+esc(a.org)+"</span>";
@@ -359,7 +391,7 @@ function actItemHtml(a){
   var body = "";
   if (hasHead && a.notes) body = '<div class="notes">'+esc(a.notes)+(link?" "+link:"")+"</div>";
   else if (link) body = '<div class="notes">'+link+"</div>";
-  return '<div class="card sc-log">'+
+  return '<div class="card sc-log ac-'+esc(status)+" pt-"+esc(a.person)+'">'+
     '<div class="t">'+actTitle(a)+personChip(a.person)+"</div>"+
     '<div class="row">'+stat+kind+"</div>"+body+"</div>";
 }
